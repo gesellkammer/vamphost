@@ -1,0 +1,25 @@
+
+PY_INCLUDE_PATH		:= /usr/include/python2.7
+NUMPY_INCLUDE_PATH 	:= /usr/lib/python2.7/site-packages/numpy/core/include
+PY_LIB			:= python2.7
+PY_TEST			:= nosetests2
+
+#PY_INCLUDE_PATH		:= /usr/include/python3.5m
+#NUMPY_INCLUDE_PATH 	:= /usr/lib/python3.5m/site-packages/numpy/core/include
+#PY_LIB			:= python3.5m
+#PY_TEST			:= nosetests3
+
+CFLAGS 			:= -O2 -Wall -Werror -fno-strict-aliasing -fPIC \
+			   -I$(PY_INCLUDE_PATH) -I$(NUMPY_INCLUDE_PATH)
+
+CXXFLAGS 		:= $(CFLAGS)
+
+LDFLAGS 		:= -shared -Wl,-z,defs -l$(PY_LIB) -ldl
+
+NOSE			:= $(PY_TEST)
+
+LIBRARY_EXT 		:= .so
+
+MAKEFILE_EXT		:= .linux
+
+include Makefile.inc

@@ -1,0 +1,5 @@
+.hg*
+*.egg*
+wheelhouse/
+dist/
+build/
