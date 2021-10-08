@@ -28,7 +28,9 @@ A simple example
 Using librosa (http://bmcfee.github.io/librosa/) to read an audio
 file, and the NNLS Chroma Vamp plugin
 (https://code.soundsoftware.ac.uk/projects/nnls-chroma/) for
-analysis::
+analysis:
+
+.. code-block:: python
 
     >>> import vamp
     >>> import librosa
