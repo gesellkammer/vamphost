@@ -201,7 +201,7 @@ load_plugin(PyObject *self, PyObject *args)
 {
     PyObject *pyPluginKey;
     float inputSampleRate;
-    ssize_t adapterFlags;
+    Py_ssize_t adapterFlags;
 
     if (!PyArg_ParseTuple(args,
 #if (PY_MAJOR_VERSION >= 3)
@@ -236,7 +236,7 @@ load_plugin(PyObject *self, PyObject *args)
 static PyObject *
 frame_to_realtime(PyObject *self, PyObject *args)
 {
-    ssize_t frame;
+    Py_ssize_t frame;
     float rate;
 
     if (!PyArg_ParseTuple(args, "nf",

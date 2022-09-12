@@ -256,7 +256,7 @@ get_output(PyObject *self, PyObject *args)
     PyPluginObject *pd = getPluginObject(self);
     if (!pd) return 0;
 
-    ssize_t n = -1;
+    Py_ssize_t n = -1;
     PyObject *pyId = 0;
     
     if (!PyArg_ParseTuple(args, "n", &n) &&
@@ -315,7 +315,7 @@ get_outputs(PyObject *self, PyObject *args)
 static PyObject *
 set_process_timestamp_method(PyObject *self, PyObject *args)
 {
-    ssize_t method;
+    Py_ssize_t method;
 
     if (!PyArg_ParseTuple(args,
                           "n",
@@ -347,7 +347,7 @@ set_process_timestamp_method(PyObject *self, PyObject *args)
 static PyObject *
 initialise(PyObject *self, PyObject *args)
 {
-    ssize_t channels, blockSize, stepSize;
+    Py_ssize_t channels, blockSize, stepSize;
 
     if (!PyArg_ParseTuple (args, "nnn",
                            &channels,
