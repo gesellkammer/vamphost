@@ -26,9 +26,9 @@ jobs:
         env:
             CIBW_BUILD: 'cp39-* cp310-*'
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
-        run: |
-            # python setup.py build_ext
-            python -m cibuildwheel --output-dir wheelhouse
+        #run: |
+        #    # python setup.py build_ext
+        #    python -m cibuildwheel --output-dir wheelhouse
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
