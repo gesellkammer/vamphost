@@ -62,11 +62,6 @@
 #include <cstddef>
 #include <set>
 
-#if defined(_MSC_VER)
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
-#endif
-
 using namespace std;
 using namespace Vamp;
 using namespace Vamp::HostExt;
