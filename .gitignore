@@ -3,3 +3,4 @@
 wheelhouse/
 dist/
 build/
+*.kate*
