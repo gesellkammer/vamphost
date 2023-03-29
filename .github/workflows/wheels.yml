@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-11, windows-2019, ubuntu-20.04]
+        os: [macOS-latest, windows-latest, ubuntu-latest]
         # os: [windows-2019]
         # os: [ubuntu-20.04, windows-2019, macOS-10.15]
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.9.0
         env:
-            CIBW_BUILD: 'cp39-* cp310-*'
+            CIBW_BUILD: 'cp39-* cp310-* cp311*'
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
         #run: |
         #    # python setup.py build_ext
