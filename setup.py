@@ -43,7 +43,7 @@ vampyhost = Extension('vampyhost',
 
 setup (name = 'vamphost',
        version = '1.2.1',
-       python_requires=">=3.8",
+       python_requires=">=3.9",
        url = 'https://code.soundsoftware.ac.uk/projects/vampy-host',
        description = 'Use Vamp plugins for audio feature analysis.',
        long_description = ( read('README.rst') + '\n\n' + read('COPYING.rst') ),
