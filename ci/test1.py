@@ -1,3 +1,4 @@
 import vamp
 
-vamp.list_plugins()
+print("Installed vamp plugins")
+print(vamp.list_plugins())
