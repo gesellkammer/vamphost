@@ -1,0 +1,33 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, windows-latest, ubuntu-latest]
+        python-version: [ "3.9", "3.10" ]
+    steps:
+      - uses: actions/checkout@v3
+
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: prepare tests
+        if: runner.os == 'linux'
+        run: |
+          mkdir -p ~/vamp
+          cd ci
+          cp pyin.so pyin.n3 pyin.cat ~/vamp
+          cd ..
+
+      - name: run tests
+        run: |
+          cd ci
+          python test1.py
+          cd ..
