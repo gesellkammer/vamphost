@@ -39,7 +39,9 @@ jobs:
         run: |
           mkdir "C:/Program Files/Vamp Plugins" -ea 0
           cd ci
-          cp pyin.dll pyin.n3 pyin.cat "C:/Program Files/Vamp Plugins"
+          Copy-Item pyin.dll -Destination "C:\Program Files\Vamp Plugins"
+          Copy-Item pyin.n3  -Destination "C:\Program Files\Vamp Plugins"
+          Copy-Item pyin.cat -Destination "C:\Program Files\Vamp Plugins"
           cd ..
 
       - name: run tests
