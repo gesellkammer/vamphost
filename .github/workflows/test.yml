@@ -26,6 +26,10 @@ jobs:
           cp pyin.so pyin.n3 pyin.cat ~/vamp
           cd ..
 
+      - name: install vamphost
+        run: |
+            pip install -U vamphost
+
       - name: run tests
         run: |
           cd ci
