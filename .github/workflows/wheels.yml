@@ -26,6 +26,7 @@ jobs:
         env:
             CIBW_BUILD: 'cp39-* cp310-* cp311*'
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
+            CIBW_ARCHS_MACOS: 'x86_64 arm64'
         #run: |
         #    # python setup.py build_ext
         #    python -m cibuildwheel --output-dir wheelhouse
@@ -34,10 +35,11 @@ jobs:
           path: ./wheelhouse/*.whl
       - name: Upload wheels
         env:
-            TWINE_USERNAME: Eduardo.Moguillansky
-            TWINE_PASSWORD: ${{ secrets.pypipass }}
+            TWINE_USERNAME: __token__
+            TWINE_PASSWORD: ${{ secrets.TWINETOKEN }}
         run: |
             echo $TWINE_USERNAME
             echo $TWINE_PASSWORD
+            python -m pip install -U twine virtualenv
             twine upload --skip-existing wheelhouse/*.whl
         continue-on-error: true
