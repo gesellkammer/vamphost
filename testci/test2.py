@@ -162,7 +162,7 @@ parser.add_argument('sndfile')
 parser.add_argument('--mode', default='pitchtrack')
 args = parser.parse_args()
 
-samples, sr = sndfileio.sndread(parser.sndfile)
+samples, sr = sndfileio.sndread(args.sndfile)
 
 if args.mode == 'pitchtrack':
     outarr = pyinPitchTrack(samples=samples, sr=sr)
