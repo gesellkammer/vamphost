@@ -6,6 +6,17 @@ import sndfileio
 import sys
 
 
+_pyinThresholdDistrs = {
+    "uniform": 0,
+    "beta10": 1,
+    "beta15": 2,
+    "beta30": 3,
+    "single10": 4,
+    "single15": 5,
+    "single20": 7
+}
+
+
 def pyinPitchTrack(samples: np.ndarray,
                    sr: int,
                    fftSize=2048,
