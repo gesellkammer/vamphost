@@ -81,8 +81,9 @@ def pyinPitchTrack(samples: np.ndarray,
 
         TODO
     """
-    if 'pyin:pyin' not in vamp.listPlugins():
-        raise RuntimeError(f"Vamp plugin 'pyin' not found. Available plugins: {vamp.listPlugins()}")
+    allplugins = vamp.list_plugins()
+    if 'pyin:pyin' not in allplugins:
+        raise RuntimeError(f"Vamp plugin 'pyin' not found. Available plugins: {allplugins}")
 
     if fftSize < 2048:
         raise ValueError("The pyin vamp plugin does not accept fft size less than 2048")
