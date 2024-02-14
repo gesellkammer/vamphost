@@ -8,20 +8,25 @@ test_task:
     cp pyin.n3 pyin.cat ~/Library/Audio/Plug-Ins/Vamp
     cp macos-arm64/*.dylib ~/Library/Audio/Plug-Ins/Vamp
     # Install test requirements
-    pip install -r requirements.txt
-    
+
   test_macos_arm64_python310_script: |
     brew install python@3.10
     
-    python3.10 -m pip install vamphost
     cd testci
+
+    python3.10 -m pip install vamphost
+    python3.10 -m pip install -r requirements.txt
+
     python3.10 test1.py
     python3.10 test2.py snd/tuning-fork--A4.flac
 
   test_macos_arm64_python311_script: |
     brew install python@3.11
 
-    python3.10 -m pip install vamphost
     cd testci
+
+    python3.11 -m pip install vamphost
+    python3.11 -m pip install -r requirements.txt
+
     python3.11 test1.py
     python3.11 test2.py snd/tuning-fork--A4.flac
