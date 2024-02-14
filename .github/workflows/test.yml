@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [macOS-latest, windows-latest, ubuntu-latest]
-        python-version: [ "3.9", "3.10" ]
+        python-version: [ "3.9", "3.10", "3.11" ]
     steps:
       - uses: actions/checkout@v3
 
@@ -22,31 +22,27 @@ jobs:
         if: runner.os == 'linux'
         run: |
           mkdir -p ~/vamp
-          cd ci
-          cp pyin.so pyin.n3 pyin.cat ~/vamp
-          cd ..
+          cd testci
+          cp linux-x86_64/pyin.so pyin.n3 pyin.cat ~/vamp
 
       - name: prepare tests in mac
         if: runner.os == 'macos'
         run: |
           mkdir -p ~/Library/Audio/Plug-Ins/Vamp
-          cd ci
-          cp pyin.dylib pyin.n3 pyin.cat ~/Library/Audio/Plug-Ins/Vamp
-          cd ..
+          cd testci
+          cp macos-x86_64/pyin.dylib pyin.n3 pyin.cat ~/Library/Audio/Plug-Ins/Vamp
 
       - name: prepare tests win
         if: runner.os == 'windows'
         run: |
           mkdir "C:/Program Files/Vamp Plugins" -ea 0
-          cd ci
-          Copy-Item pyin.dll -Destination "C:\Program Files\Vamp Plugins"
+          cd testci
+          Copy-Item win-x86_64/pyin.dll -Destination "C:\Program Files\Vamp Plugins"
           Copy-Item pyin.n3  -Destination "C:\Program Files\Vamp Plugins"
           Copy-Item pyin.cat -Destination "C:\Program Files\Vamp Plugins"
-          cd ..
 
       - name: run tests
         run: |
           pip install -U vamphost
-          cd ci
+          cd testci
           python test1.py
-          cd ..

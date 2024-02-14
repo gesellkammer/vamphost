@@ -5,7 +5,8 @@ test_task:
   setup_macos_script: |
     mkdir -p ~/Library/Audio/Plug-Ins/Vamp
     cd testci
-    cp pyin-arm64.dylib pyin.n3 pyin.cat ~/Library/Audio/Plug-Ins/Vamp
+    cp pyin.n3 pyin.cat ~/Library/Audio/Plug-Ins/Vamp
+    cp macos-arm64/*.dylib ~/Library/Audio/Plug-Ins/Vamp
     
   test_macos_arm64_python310_script: |
     brew install python@3.10
