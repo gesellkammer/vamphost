@@ -43,6 +43,10 @@ jobs:
 
       - name: run tests
         run: |
-          pip install -U vamphost
           cd testci
+          
+          pip install -U vamphost
+          pip install -r requirements.txt
           python test1.py
+          python test2.py snd/tuning-fork--A4.flac
+
