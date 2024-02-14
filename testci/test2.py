@@ -6,6 +6,9 @@ import sndfileio
 import sys
 
 
+np.set_printoptions(threshold=sys.maxsize)
+
+
 _pyinThresholdDistrs = {
     "uniform": 0,
     "beta10": 1,
