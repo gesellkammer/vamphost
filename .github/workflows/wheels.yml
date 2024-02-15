@@ -10,8 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [macOS-latest, windows-latest, ubuntu-latest]
-        # os: [windows-2019]
-        # os: [ubuntu-20.04, windows-2019, macOS-10.15]
+
     steps:
       - uses: actions/checkout@v3
 
@@ -27,9 +26,7 @@ jobs:
             CIBW_BUILD: 'cp39-* cp310-* cp311*'
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
             CIBW_ARCHS_MACOS: 'x86_64 arm64'
-        #run: |
-        #    # python setup.py build_ext
-        #    python -m cibuildwheel --output-dir wheelhouse
+
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl

@@ -4,3 +4,4 @@ wheelhouse/
 dist/
 build/
 *.kate*
+.idea
