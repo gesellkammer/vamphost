@@ -21,11 +21,16 @@ jobs:
         run: python -m pip install cibuildwheel twine virtualenv numpy
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.9.0
         env:
-            CIBW_BUILD: 'cp39-* cp310-* cp311*'
-            CIBW_SKIP: 'pp* *686* *-musllinux_*'
-            CIBW_ARCHS_MACOS: 'x86_64 arm64'
+          CIBW_BUILD: 'cp39-* cp310-* cp311-* cp312-*'
+          # We don't build for arm because the fftw lib is still not included
+          # See the cirrus build
+          CIBW_ARCHS_MACOS: 'x86_64'
+          CIBW_SKIP: 'pp* *686* *-musllinux_*'
+          CIBW_BUILD_VERBOSITY: 2
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+        run: |
+          python -m cibuildwheel --output-dir wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
