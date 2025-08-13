@@ -3,13 +3,12 @@
 requires = [
     "setuptools>=42",
     "wheel",
-    "numpy>=1.22"
+    "numpy>=2.0"
 ]
 
 build-backend = "setuptools.build_meta"
 
 
 [tool.cibuildwheel]
-build = "cp38-* cp39-* cp310-*"
-
+build = "cp39-* cp310-* cp311-* cp312-* cp313-*"
 skip = "pp* *686* *-musllinux_*"
