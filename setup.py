@@ -1,69 +1,48 @@
-import os
+"""Build the vampyhost C++ extension.
+
+All package metadata lives in pyproject.toml; this file only defines
+the extension module, which cannot be declared statically.
+"""
+
 import sys
-from setuptools import setup, find_packages, Extension
 
-sdkdir = 'vamp-plugin-sdk/src/vamp-hostsdk/'
-vpydir = 'native/'
+import numpy
+from setuptools import Extension, setup
 
-sdkfiles = [ 'Files', 'PluginBufferingAdapter', 'PluginChannelAdapter',
-             'PluginHostAdapter', 'PluginInputDomainAdapter', 'PluginLoader',
-             'PluginSummarisingAdapter', 'PluginWrapper', 'RealTime' ]
-vpyfiles = [ 'PyPluginObject', 'PyRealTime', 'VectorConversion', 'vampyhost' ]
+sdkdir = "vamp-plugin-sdk/src/vamp-hostsdk/"
+vpydir = "native/"
 
-srcfiles = [
-    sdkdir + f + '.cpp' for f in sdkfiles
-] + [
-    vpydir + f + '.cpp' for f in vpyfiles
+sdkfiles = [
+    "Files",
+    "PluginBufferingAdapter",
+    "PluginChannelAdapter",
+    "PluginHostAdapter",
+    "PluginInputDomainAdapter",
+    "PluginLoader",
+    "PluginSummarisingAdapter",
+    "PluginWrapper",
+    "RealTime",
 ]
+vpyfiles = ["PyPluginObject", "PyRealTime", "VectorConversion", "vampyhost"]
 
-def read(*paths):
-    with open(os.path.join(*paths), 'r') as f:
-        return f.read()
+sources = [sdkdir + f + ".cpp" for f in sdkfiles]
+sources += [vpydir + f + ".cpp" for f in vpyfiles]
 
+# -fPIC/-O2 already come from Python's sysconfig; -stdlib=libc++ has been
+# the macOS default for a decade. Only the Linux strict-aliasing
+# workaround for this codebase is still needed. Keeping this empty on
+# Windows also avoids passing gcc-only flags to MSVC.
+extra_compile_args = []
+if sys.platform == "linux":
+    extra_compile_args.append("-fno-strict-aliasing")
 
+vampyhost = Extension(
+    "vampyhost",
+    language="c++",
+    sources=sources,
+    define_macros=[("_USE_MATH_DEFINES", 1)],
+    include_dirs=["vamp-plugin-sdk", numpy.get_include()],
+    extra_compile_args=extra_compile_args,
+)
 
-class get_numpy_include(str):
-    def __str__(self):
-        import numpy
-        return numpy.get_include()
-
-extra_compile_args = ['-fPIC', '-O2']
-
-if sys.platform == 'darwin':
-    extra_compile_args.extend(['-stdlib=libc++'])
-elif sys.platform == 'linux':
-    extra_compile_args.extend(['-fno-strict-aliasing'])
-
-vampyhost = Extension('vampyhost',
-                      language='c++',
-                      sources = srcfiles,
-                      define_macros = [ ('_USE_MATH_DEFINES', 1) ],
-                      include_dirs = [ 'vamp-plugin-sdk', get_numpy_include()],
-                      extra_compile_args=extra_compile_args)
-
-setup (name = 'vamphost',
-       version = '1.3.2',
-       python_requires=">=3.10",
-       url = 'https://code.soundsoftware.ac.uk/projects/vampy-host',
-       description = 'Use Vamp plugins for audio feature analysis.',
-       long_description = ( read('README.rst') + '\n\n' + read('COPYING.rst') ),
-       license = 'MIT',
-       license_file = "LICENSE.txt",
-       packages = find_packages(exclude = [ '*test*' ]),
-       ext_modules = [ vampyhost ],
-       install_requires = ['numpy'],
-       setup_requires = ['numpy'],
-       author = 'Chris Cannam, George Fazekas',
-       author_email = 'cannam@all-day-breakfast.com',
-       classifiers = [
-           'Development Status :: 4 - Beta',
-           'Intended Audience :: Science/Research',
-           'Intended Audience :: Developers',
-           'Operating System :: MacOS :: MacOS X',
-           'Operating System :: Microsoft :: Windows',
-           'Operating System :: POSIX',
-           'Programming Language :: Python',
-           'Programming Language :: Python :: 3',
-           'Topic :: Multimedia :: Sound/Audio :: Analysis'
-           ]
-       )
+setup(ext_modules=[vampyhost])
